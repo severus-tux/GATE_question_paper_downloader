@@ -51,7 +51,7 @@ clean()
 	#Deleting empty directories
 	find $path/temp-gqpd -empty -type d -delete
 	#Moving to original Directory
-	cp $path/temp-gqpd/* $path
+	cp -r $path/temp-gqpd/* $path
 	rm -r $path/temp-gqpd
 	
 }
