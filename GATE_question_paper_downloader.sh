@@ -56,6 +56,8 @@ clean()
 	
 }
 
+zenity --info --ok-label="Got it" --height=20 --title="Please Note" --text="In 2015, Some papers were split into more than one papers.\n\nExample : CS was made as CS1 , CS2 , CS3"
+
 #wget --tries=0 --continue http://gate.iitm.ac.in/gateqps/2015/ae.pdf
 selection=$(zenity  --height=500 --width=550 --ok-label="Next"\
 					--title="Select papers"\
