@@ -24,7 +24,7 @@
 download()
 {
 	cd $path
-	mkdir temp-gqpd
+	mkdir -p temp-gqpd
 	cd temp-gqpd
 	for ((i=0;i<${#subject[@]};i++)); do
 		cd $path/temp-gqpd
@@ -33,19 +33,26 @@ download()
 		for ((j=0;j<${#year[@]};j++)); do
 			wget --continue --tries=0 --progress=bar --show-progress --output-document ${subject[$i]}_${year[$j]}.pdf "http://gate.iitm.ac.in/gateqps/${year[$j]}/${subject[$i]}.pdf"\
 			2>&1| awk '{for (i=1;i<=NF;i++) if($i~/\%/) {sub(/\%/,"",$i);print $i;system("")}}' |\
-			zenity --progress --text="Downloading ${subject[$i]} of ${year[$j]}..." --title="Downloading..." --auto-close --percentage=0 --time-remaining\
+			zenity --progress --height=20 --width=400 --text="Downloading ${subject[$i]} of ${year[$j]}..." --title="Downloading..." --auto-close --percentage=0 --time-remaining\
 			--height=200 --width=300
+			
+			if [ $? -ne 0 ]; then
+				return
+			fi
 			# fflush("") or fflush() or system("") can be used for dynamically flushing buffer contents to zenity 
 		done
 	done
-	
+}
+
+clean()
+{	
 	# Deleting empty files (man wget section -O)
 	find $path/temp-gqpd -empty -type f -delete
 	#Deleting empty directories
 	find $path/temp-gqpd -empty -type d -delete
 	#Moving to original Directory
-	mv $path/temp-gqpd/* $path
-	rmdir $path/temp-gqpd
+	cp $path/temp-gqpd/* $path
+	rm -r $path/temp-gqpd
 	
 }
 
@@ -154,4 +161,5 @@ year=($(zenity  --height=360 --width=300 --ok-label="Select destination"\
 		fi
 		
 		download
+		clean
 fi
