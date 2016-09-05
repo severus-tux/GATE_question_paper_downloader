@@ -36,9 +36,9 @@ download()
 			zenity --progress --height=20 --width=400 --text="Downloading ${subject[$i]} of ${year[$j]}..." --title="Downloading..." --auto-close --percentage=0 --time-remaining\
 			--height=200 --width=300
 			
-			#if [ $? -ne 0 ]; then
-			#	return
-			#fi
+			if [ $? -eq 1 ]; then
+				return
+			fi
 			# fflush("") or fflush() or system("") can be used for dynamically flushing buffer contents to zenity 
 		done
 	done
