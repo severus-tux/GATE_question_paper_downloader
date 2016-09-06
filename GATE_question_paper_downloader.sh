@@ -165,7 +165,7 @@ year=($(zenity  --height=360 --width=300 --ok-label="Select destination"\
 		ping -c 2 8.8.8.8 >/dev/null
 		if [ $? -ne 0 ] ; then
 			zenity --error --title="No Internet" --text="No Internet access\nPlease make sure you have active internet connection"\
-			--heigt=100 --width=350
+			--ellipsize
 			exit $?
 		fi
 		download
